@@ -1,0 +1,6 @@
+packages:
+  - "apps/*"
+  - "clis/*"
+  - "packages/*"
+  - "tooling/*"
+  - "wasms/*"

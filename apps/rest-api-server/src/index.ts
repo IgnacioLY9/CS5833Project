@@ -1,0 +1,97 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import * as Sentry from "@sentry/node";
+import express from "express";
+
+import "./bigint";
+import { env } from "@blobscan/env";
+import { collectDefaultMetrics } from "@blobscan/open-telemetry";
+
+import "./instrumentation";
+import { ErrorException } from "@blobscan/errors";
+import { logger } from "@blobscan/logger";
+
+import { printBanner } from "./banner";
+import { prisma } from "./clients/prisma";
+import { errorHandler, metricsHandler } from "./handlers";
+import {
+  bodyParserMiddleware,
+  corsMiddleware,
+  matomoMiddleware,
+  morganMiddleware,
+} from "./middlewares";
+import { setUpOpenApiTRPC } from "./openapi-trpc";
+import { getBlobPropagator } from "./services/blob-propagator";
+import { setUpSyncers } from "./services/syncers";
+
+collectDefaultMetrics();
+
+printBanner();
+
+async function main() {
+  const closeSyncers = await setUpSyncers();
+
+  const app = express();
+
+  app.use(corsMiddleware);
+  app.use(bodyParserMiddleware);
+  app.use(morganMiddleware);
+  app.use(matomoMiddleware);
+
+  app.get("/metrics", metricsHandler);
+
+  await setUpOpenApiTRPC(app);
+
+  app.use(errorHandler);
+
+  const server = app.listen(env.BLOBSCAN_API_PORT, () => {
+    logger.info(`Server started on http://0.0.0.0:${env.BLOBSCAN_API_PORT}`);
+  });
+
+  async function gracefulShutdown(signal: string) {
+    logger.debug(`Received ${signal}. Shutting down...`);
+
+    await prisma
+      .$disconnect()
+      .finally(async () => {
+        (await getBlobPropagator()).close();
+      })
+      .finally(async () => {
+        await closeSyncers();
+      })
+      .finally(() => {
+        server.close(() => {
+          logger.debug("Server shut down successfully");
+        });
+      });
+  }
+
+  process.on("uncaughtException", (err) => {
+    logger.error(new ErrorException("Uncaught exception", err));
+
+    process.exit(1); // Exit to prevent an unstable state
+  });
+
+  // Handle unhandled promise rejections (async errors outside Express)
+  process.on("unhandledRejection", (err) => {
+    const cause = err instanceof Error ? err : new Error(err as string);
+    logger.error(new ErrorException("Unhandled promise rejection", cause));
+
+    process.exit(1);
+  });
+
+  // Listen for TERM signal .e.g. kill
+  process.on("SIGTERM", async () => {
+    await gracefulShutdown("SIGTERM");
+  });
+
+  // Listen for INT signal e.g. Ctrl-C
+  process.on("SIGINT", async () => {
+    await gracefulShutdown("SIGINT");
+  });
+}
+
+main().catch((err) => {
+  Sentry.captureException(err);
+
+  logger.error(err);
+});
