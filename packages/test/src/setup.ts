@@ -1,0 +1,49 @@
+import "./polyfill";
+import { afterAll, beforeAll, beforeEach, vi } from "vitest";
+
+import { fixtures } from "./fixtures";
+import { getAnvil } from "./services/anvil";
+import { getPrisma } from "./services/prisma";
+import { redis } from "./services/redis";
+
+const { anvil, server } = getAnvil();
+const prisma = getPrisma();
+
+beforeAll(async () => {
+  vi.useFakeTimers();
+  vi.setSystemTime(fixtures.systemDate);
+
+  try {
+    await anvil.start();
+  } catch (err) {
+    if (!(err as Error).message.includes("Address already in use")) {
+      throw err;
+    }
+  }
+
+  await server.start();
+});
+
+beforeEach(async () => {
+  await redis.flushdb();
+  await fixtures.create(prisma);
+});
+
+afterAll(async () => {
+  vi.useRealTimers();
+
+  await prisma
+    .$disconnect()
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    .finally(async () => {
+      await anvil.stop();
+    })
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    .finally(async () => {
+      await server.stop();
+    })
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
+    .finally(async () => {
+      await redis.flushdb();
+    });
+});

@@ -1,0 +1,158 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches: ["main"]
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+env:
+  FORCE_COLOR: 3
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: ${{ secrets.TURBO_TEAM }}
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Lint
+        run: pnpm lint
+
+  typecheck:
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: blobscan_dev
+          POSTGRES_USER: blobscan
+          POSTGRES_PASSWORD: s3cr3t
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Setup DB
+        uses: ./tooling/github/setup-db
+
+      - name: Typecheck
+        run: pnpm type-check
+
+  build:
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: blobscan_dev
+          POSTGRES_USER: blobscan
+          POSTGRES_PASSWORD: s3cr3t
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Setup DB
+        uses: ./tooling/github/setup-db
+
+      - name: Build
+        run: pnpm build
+
+  test:
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: blobscan_dev
+          POSTGRES_USER: blobscan
+          POSTGRES_PASSWORD: s3cr3t
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        # Docker Hub image
+        image: redis
+        # Set health checks to wait until redis has started
+        ports:
+          # Maps port 6379 on service container to the host
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      s3mock:
+        image: adobe/s3mock:latest
+        env:
+          COM_ADOBE_TESTING_S3MOCK_STORE_INITIAL_BUCKETS: blobscan-s3-bucket
+          COM_ADOBE_TESTING_S3MOCK_STORE_REGION: us-east-1
+        ports:
+          - 9090:9090
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup
+        uses: ./tooling/github/setup
+
+      - name: Setup DB
+        uses: ./tooling/github/setup-db
+
+      - name: Setup GCS emulator
+        run: |
+          docker pull fsouza/fake-gcs-server:1.53.1
+          docker run -d --name fake-gcs \
+            -p 4443:4443 \
+            -v "${GITHUB_WORKSPACE}/packages/test/src/fixtures/gcs:/data" \
+            fsouza/fake-gcs-server:1.53.1 \
+            -backend memory -scheme http -port 4443 -data /data
+
+      - name: Generate Prisma Client
+        run: pnpm db:generate
+
+      - name: Set up Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          version: stable
+
+      - name: Test
+        run: pnpm coverage
+        env:
+          VITEST_MAINNET_FORK_URL: ${{ secrets.VITEST_MAINNET_FORK_URL }}
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: Blobscan/blobscan

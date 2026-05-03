@@ -1,0 +1,59 @@
+{
+  "name": "@blobscan/db",
+  "version": "0.26.1",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "files": [
+    "./prisma/zod-utils.ts",
+    "./prisma/zod",
+    "./prisma/enums"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf .turbo node_modules",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "type-check": "tsc --noEmit",
+    "db:generate": "pnpm with-env prisma generate --sql",
+    "db:push": "pnpm with-env prisma db push --skip-generate",
+    "db:migrate": "pnpm with-env prisma migrate dev",
+    "db:seed": "pnpm with-env prisma db seed",
+    "db:reset": "pnpm with-env prisma migrate reset",
+    "dev": "pnpm with-env prisma studio --port 5556",
+    "with-env": "dotenv -e ../../.env --",
+    "with-env:test": "dotenv -e ../../.env.test --",
+    "test": "pnpm with-env:test vitest",
+    "test:ui": "pnpm with-env:test vitest --ui"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed/main.ts"
+  },
+  "dependencies": {
+    "@blobscan/dayjs": "workspace:^0.1.0",
+    "@blobscan/logger": "workspace:^0.1.4",
+    "@blobscan/open-telemetry": "workspace:^0.0.10",
+    "@blobscan/zod": "workspace:^0.1.0",
+    "@prisma/client": "^5.19.1",
+    "@prisma/generator-helper": "^5.19.1",
+    "prisma": "^5.19.1",
+    "zod-prisma": "^0.5.4"
+  },
+  "devDependencies": {
+    "@blobscan/chains": "workspace:^0.4.0",
+    "@faker-js/faker": "^8.0.2",
+    "js-sha256": "^0.9.0",
+    "ora": "^8.1.1",
+    "tsx": "^4.19.2"
+  },
+  "eslintConfig": {
+    "root": true,
+    "ignorePatterns": [
+      "prisma/zod/*.ts",
+      "prisma/enums/*.ts"
+    ],
+    "extends": [
+      "@blobscan/eslint-config/base"
+    ]
+  }
+}

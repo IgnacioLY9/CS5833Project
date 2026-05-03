@@ -1,0 +1,58 @@
+{
+  "name": "@blobscan/rest-api-server",
+  "version": "0.12.6",
+  "private": true,
+  "scripts": {
+    "build": "ncc build src/index.ts --target es2020 --minify",
+    "postbuild": "tsx ./scripts/postbuild.ts",
+    "clean": "git clean -xdf node_modules",
+    "dev": "pnpm with-env tsx watch --require ./scripts/init-bucket.ts ./src/index.ts",
+    "lint": "eslint .",
+    "lint:fix": "pnpm lint --fix",
+    "start": "pnpm with-env node dist/index.js",
+    "profile": " tsx --env-file=../../.env --prof --require ./src/instrumentation.ts src/index.ts",
+    "with-env": "dotenv -e ../../.env --",
+    "type-check": "tsc --noEmit"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "dependencies": {
+    "@blobscan/api": "workspace:^0.33.0",
+    "@blobscan/blob-propagator": "workspace:^0.6.5",
+    "@blobscan/blob-storage-manager": "workspace:^0.8.3",
+    "@blobscan/chains": "workspace:^0.4.0",
+    "@blobscan/db": "workspace:^0.26.0",
+    "@blobscan/env": "workspace:^0.2.0",
+    "@blobscan/errors": "workspace:^0.0.2",
+    "@blobscan/logger": "workspace:^0.1.5",
+    "@blobscan/open-telemetry": "workspace:^0.0.10",
+    "@blobscan/price-feed": "workspace:^0.1.0",
+    "@blobscan/rollups": "workspace:^0.4.2",
+    "@blobscan/syncers": "workspace:^0.6.4",
+    "@blobscan/zod": "workspace:^0.1.0",
+    "@opentelemetry/instrumentation-express": "^0.33.0",
+    "@sentry/node": "^7.109.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "ioredis": "^5.3.2",
+    "morgan": "^1.10.0",
+    "swagger-ui-express": "^4.6.2",
+    "trpc-openapi": "^1.2.0",
+    "viem": "^2.17.4"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/morgan": "^1.9.4",
+    "@types/swagger-ui-express": "^4.1.3",
+    "@vercel/ncc": "^0.38.1",
+    "zx": "^8.1.4"
+  },
+  "eslintConfig": {
+    "root": true,
+    "extends": [
+      "@blobscan/eslint-config/base"
+    ]
+  }
+}
