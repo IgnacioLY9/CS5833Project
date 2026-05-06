@@ -44,8 +44,6 @@ describe("getGasSummary", () => {
 
     console.log(JSON.stringify(gasStatsTable, null, 2));
 
-    
-
     expect(gasStats).toMatchInlineSnapshot(`
       [
         {
