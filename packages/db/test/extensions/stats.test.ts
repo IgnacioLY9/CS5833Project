@@ -469,6 +469,10 @@ describe("Stats Extension", () => {
       .toNumber();
     const avgBlobUsageSize = Number(totalBlobUsageSize) / Number(totalBlobs);
 
+    console.log(avgBlobGasPrice);
+    console.log(totalTransactions);
+    console.log(transactions.length);
+
     return {
       totalBlobs,
       totalBlobSize,
