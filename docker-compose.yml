@@ -8,7 +8,12 @@ services:
       - ".env"
 
   api:
-    image: blossomlabs/blobscan-api:${BLOBSCAN_API_TAG}
+    # image: blossomlabs/blobscan-api:${BLOBSCAN_API_TAG}
+    build:
+      context: .
+      args:
+        DATABASE_URL: ${DATABASE_URL}
+        DIRECT_URL: ${DIRECT_URL}
     restart: always
     ports:
       - ${EXTERNAL_API_PORT}:3001
