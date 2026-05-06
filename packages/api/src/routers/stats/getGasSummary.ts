@@ -11,8 +11,6 @@ const metricsSchema = GasStatsModel.omit({
   updatedAt: true,
 });
 
-console.log("getGasSummary loaded");
-
 const outputSchema = z
   .object({
     data: z

@@ -28,6 +28,18 @@ describe("getGasSummary", () => {
         .filter((s) => s.dimension.type === "global")
     );
 
+    console.log("RAW RESPONSE:", JSON.stringify(gasStats, null, 2));
+
+    const gasStatsTable = await ctx.prisma.overallStats.findMany({
+      orderBy: {
+        updatedAt: "desc",
+      },
+    });
+    
+    console.log(JSON.stringify(gasStatsTable, null, 2));
+
+    
+
     expect(gasStats).toMatchInlineSnapshot(`
       [
         {
