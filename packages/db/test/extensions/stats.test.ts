@@ -469,13 +469,6 @@ describe("Stats Extension", () => {
       .toNumber();
     const avgBlobUsageSize = Number(totalBlobUsageSize) / Number(totalBlobs);
 
-    if (avgBlobGasPrice == 21.75) {
-      console.log(
-        "Debug avgBlobGasPrice hit 21.75. Transactions:",
-        JSON.stringify(transactions, null, 2)
-      );
-    }
-
     return {
       totalBlobs,
       totalBlobSize,

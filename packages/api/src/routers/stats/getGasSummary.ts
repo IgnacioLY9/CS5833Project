@@ -37,20 +37,23 @@ export const getGasSummary = publicProcedure
   .input(z.void())
   .output(outputSchema)
   .query(async ({ ctx: { prisma } }) => {
-    const allOverallStats = await prisma.gasStats.findMany({
+    const latestGasStats = await prisma.gasStats.findFirst({
       orderBy: { updatedAt: "desc" },
     });
 
+    if (!latestGasStats) {
+      return { data: [] };
+    }
+
+    const { updatedAt, ...metrics } = latestGasStats;
+
     return {
-      data: allOverallStats.map(
-        ({
-          updatedAt,
-          ...metrics
-        }) => ({
-          dimension: getDimension(null), // maybe?
+      data: [
+        {
+          dimension: getDimension(null),
           metrics,
           updatedAt,
-        })
-      ),
+        },
+      ],
     };
   });
