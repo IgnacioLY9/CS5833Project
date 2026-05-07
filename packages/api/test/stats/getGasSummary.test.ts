@@ -100,7 +100,7 @@ describe("getOverall", () => {
           "metrics": {
             "maxBlobGasPrice": 22,
             "medianBlobGasPrice": 22,
-            "minBlobGasPrice": 22,
+            "minBlobGasPrice": 20,
             "q1BlobGasPrice": 22,
             "q3BlobGasPrice": 22,
           },
