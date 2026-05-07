@@ -25,7 +25,7 @@ const outputSchema = z
   })
   .transform(normalize);
 
-export const getOverall = publicProcedure
+export const getGasSummary = publicProcedure
   .meta({
     openapi: {
       method: "GET",

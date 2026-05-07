@@ -459,6 +459,7 @@ model GasStats {
 
   updatedAt DateTime @default(now()) @map("updated_at")
 
+  @@unique([category, rollup])
   @@map("gas_stats")
 }
 
