@@ -438,7 +438,9 @@ model OverallStats {
 }
 
 model GasStats {
-  id Int @id @default(autoincrement())
+  id       Int       @id @default(autoincrement())
+  category Category?
+  rollup   Rollup?
 
   /// @zod.nonnegative()
   avgBlobGasPrice Float @default(0) @map("avg_blob_gas_price")
