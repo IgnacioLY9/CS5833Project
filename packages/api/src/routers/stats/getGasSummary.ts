@@ -1,4 +1,4 @@
-import { OverallStatsModel } from "@blobscan/db/prisma/zod";
+import { GasStatsModel } from "@blobscan/db/prisma/zod";
 import { z } from "@blobscan/zod";
 
 import { publicProcedure } from "../../procedures";
@@ -6,34 +6,11 @@ import { normalize } from "../../utils";
 import { dimensionSchema, getDimension } from "../../zod-schemas";
 import { buildStatsPath } from "./helpers";
 
-const metricsSchema = OverallStatsModel.omit({
+const metricsSchema = GasStatsModel.omit({
   id: true,
   category: true,
   rollup: true,
   updatedAt: true,
-
-  avgBlobAsCalldataFee: true,
-  avgBlobAsCalldataMaxFee: true,
-  avgBlobFee: true,
-  avgBlobMaxFee: true,
-  avgBlobUsageSize: true,
-  avgMaxBlobGasFee: true,
-
-  totalBlobAsCalldataFee: true,
-  totalBlobAsCalldataGasUsed: true,
-  totalBlobAsCalldataMaxFees: true,
-  totalBlobFee: true,
-  totalBlobGasUsed: true,
-  totalBlobMaxFees: true,
-  totalBlobMaxGasFees: true,
-  
-  totalBlobSize: true,
-  totalBlobUsageSize: true,
-  totalBlocks: true,
-  totalTransactions: true,
-  totalUniqueBlobs: true,
-  totalUniqueReceivers: true,
-  totalUniqueSenders: true,
 });
 
 const outputSchema = z
@@ -42,7 +19,7 @@ const outputSchema = z
       .object({
         dimension: dimensionSchema,
         metrics: metricsSchema,
-        updatedAt: OverallStatsModel.shape.updatedAt,
+        updatedAt: GasStatsModel.shape.updatedAt,
       })
       .array(),
   })
@@ -60,7 +37,7 @@ export const getOverall = publicProcedure
   .input(z.void())
   .output(outputSchema)
   .query(async ({ ctx: { prisma } }) => {
-    const allOverallStats = await prisma.overallStats.findMany({
+    const allOverallStats = await prisma.gasStats.findMany({
       orderBy: [{ category: "asc" }, { rollup: "asc" }],
     });
 

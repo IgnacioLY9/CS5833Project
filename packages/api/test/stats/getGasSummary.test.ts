@@ -34,14 +34,11 @@ describe("getOverall", () => {
             "type": "category",
           },
           "metrics": {
-            "avgBlobGasPrice": 21.77777777777778,
             "maxBlobGasPrice": null,
             "medianBlobGasPrice": null,
             "minBlobGasPrice": null,
             "q1BlobGasPrice": null,
             "q3BlobGasPrice": null,
-            "totalBlobGasPrice": 196n,
-            "totalBlobs": 15,
           },
         },
         {
@@ -50,14 +47,11 @@ describe("getOverall", () => {
             "type": "category",
           },
           "metrics": {
-            "avgBlobGasPrice": 21.71428571428572,
             "maxBlobGasPrice": null,
             "medianBlobGasPrice": null,
             "minBlobGasPrice": null,
             "q1BlobGasPrice": null,
             "q3BlobGasPrice": null,
-            "totalBlobGasPrice": 152n,
-            "totalBlobs": 14,
           },
         },
         {
@@ -66,14 +60,11 @@ describe("getOverall", () => {
             "type": "rollup",
           },
           "metrics": {
-            "avgBlobGasPrice": 22,
             "maxBlobGasPrice": null,
             "medianBlobGasPrice": null,
             "minBlobGasPrice": null,
             "q1BlobGasPrice": null,
             "q3BlobGasPrice": null,
-            "totalBlobGasPrice": 22n,
-            "totalBlobs": 1,
           },
         },
         {
@@ -82,14 +73,11 @@ describe("getOverall", () => {
             "type": "rollup",
           },
           "metrics": {
-            "avgBlobGasPrice": 22,
             "maxBlobGasPrice": null,
             "medianBlobGasPrice": null,
             "minBlobGasPrice": null,
             "q1BlobGasPrice": null,
             "q3BlobGasPrice": null,
-            "totalBlobGasPrice": 44n,
-            "totalBlobs": 4,
           },
         },
         {
@@ -98,14 +86,11 @@ describe("getOverall", () => {
             "type": "rollup",
           },
           "metrics": {
-            "avgBlobGasPrice": 21.5,
             "maxBlobGasPrice": null,
             "medianBlobGasPrice": null,
             "minBlobGasPrice": null,
             "q1BlobGasPrice": null,
             "q3BlobGasPrice": null,
-            "totalBlobGasPrice": 86n,
-            "totalBlobs": 9,
           },
         },
         {
@@ -113,14 +98,11 @@ describe("getOverall", () => {
             "type": "global",
           },
           "metrics": {
-            "avgBlobGasPrice": 21.75,
             "maxBlobGasPrice": null,
             "medianBlobGasPrice": null,
             "minBlobGasPrice": null,
             "q1BlobGasPrice": null,
             "q3BlobGasPrice": null,
-            "totalBlobGasPrice": 348n,
-            "totalBlobs": 29,
           },
         },
       ]

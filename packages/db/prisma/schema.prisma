@@ -399,16 +399,6 @@ model OverallStats {
   avgBlobUsageSize           Float    @default(0) @map("avg_blob_usage_size")
   /// @zod.nonnegative()
   avgMaxBlobGasFee           Float    @default(0) @map("avg_max_blob_gas_fee")
-  /// @zod.nonnegative()
-  maxBlobGasPrice Float @default(0) @map("max_blob_gas_price")
-  /// @zod.nonnegative()
-  medianBlobGasPrice Float @default(0) @map("median_blob_gas_price")
-  /// @zod.nonnegative()
-  minBlobGasPrice Float @default(0) @map("min_blob_gas_price")
-  /// @zod.nonnegative()
-  q1BlobGasPrice Float @default(0) @map("q1_blob_gas_price")
-  /// @zod.nonnegative()
-  q3BlobGasPrice Float @default(0) @map("q3_blob_gas_price")
   /// @zod.custom(imports.nonNegativeDecimalSchema)
   totalBlobAsCalldataFee     Decimal  @default(0) @map("total_blob_as_calldata_fee") @db.Decimal(100, 0)
   /// @zod.custom(imports.nonNegativeDecimalSchema)
@@ -445,6 +435,31 @@ model OverallStats {
 
   @@unique([category, rollup])
   @@map("overall_stats")
+}
+
+model GasStats {
+  id       Int       @id @default(autoincrement())
+  category Category?
+  rollup   Rollup?
+
+  /// @zod.nonnegative()
+  maxBlobGasPrice Float @default(0) @map("max_blob_gas_price")
+
+  /// @zod.nonnegative()
+  medianBlobGasPrice Float @default(0) @map("median_blob_gas_price")
+
+  /// @zod.nonnegative()
+  minBlobGasPrice Float @default(0) @map("min_blob_gas_price")
+
+  /// @zod.nonnegative()
+  q1BlobGasPrice Float @default(0) @map("q1_blob_gas_price")
+
+  /// @zod.nonnegative()
+  q3BlobGasPrice Float @default(0) @map("q3_blob_gas_price")
+
+  updatedAt DateTime @default(now()) @map("updated_at")
+
+  @@map("gas_stats")
 }
 
 model EthUsdPrice {
