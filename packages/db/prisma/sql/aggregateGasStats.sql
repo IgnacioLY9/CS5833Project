@@ -18,11 +18,11 @@ SELECT
   END AS category,
   from_addr.rollup,
 
-  MIN(b.blob_gas_price) AS min_blob_gas_price,
-  PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY b.blob_gas_price) AS q1_blob_gas_price,
-  PERCENTILE_CONT(0.5)  WITHIN GROUP (ORDER BY b.blob_gas_price) AS median_blob_gas_price,
-  PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY b.blob_gas_price) AS q3_blob_gas_price,
-  MAX(b.blob_gas_price) AS max_blob_gas_price,
+  COALESCE(MIN(b.blob_gas_price), 0) AS min_blob_gas_price,
+  COALESCE(PERCENTILE_CONT(0.25) WITHIN GROUP (ORDER BY b.blob_gas_price), 0),
+  COALESCE(PERCENTILE_CONT(0.5) WITHIN GROUP (ORDER BY b.blob_gas_price), 0),
+  COALESCE(PERCENTILE_CONT(0.75) WITHIN GROUP (ORDER BY b.blob_gas_price), 0),
+  COALESCE(MAX(b.blob_gas_price), 0),
 
   NOW() AS updated_at
 
