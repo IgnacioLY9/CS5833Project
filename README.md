@@ -17,6 +17,10 @@ To learn more about Blobscan, please check out our [documentation website](https
 - **Open source** - Blobscan is open-source and available to everyone. We welcome contributions too. Check out our issues to see how you can help.
 - **Docker images** - available at [blobscan-web](https://hub.docker.com/r/blossomlabs/blobscan-web) and [blobscan-api](https://hub.docker.com/r/blossomlabs/blobscan-api).
 
+# Ignacio Features
+
+- **New API Endpoint** - Returns a 5 number summary of blob gas prices
+
 # Installation
 
 Check out [Installation guide](https://docs.blobscan.com/docs/installation).
