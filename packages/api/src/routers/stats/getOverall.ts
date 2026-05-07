@@ -11,6 +11,12 @@ const metricsSchema = OverallStatsModel.omit({
   category: true,
   rollup: true,
   updatedAt: true,
+
+  maxBlobGasPrice: true,
+  medianBlobGasPrice: true,
+  minBlobGasPrice: true,
+  q1BlobGasPrice: true,
+  q3BlobGasPrice: true,
 });
 
 const outputSchema = z

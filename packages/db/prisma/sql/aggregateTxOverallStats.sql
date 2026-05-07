@@ -21,7 +21,12 @@ INSERT INTO overall_stats AS curr_stats (
   avg_blob_as_calldata_max_fee,
   avg_max_blob_gas_fee,
   avg_blob_gas_price,
-  updated_at
+  updated_at,
+  min_blob_gas_price,
+  max_blob_gas_price,
+  q1_blob_gas_price,
+  median_blob_gas_price,
+  q3_blob_gas_price
 )
 SELECT
   CASE WHEN from_addr.rollup IS NOT NULL THEN 'rollup'::category ELSE 'other'::category END AS category,
@@ -56,7 +61,15 @@ SELECT
   COALESCE(AVG(tx.blob_as_calldata_gas_used * tx.max_fee_per_blob_gas)::FLOAT, 0) AS avg_blob_as_calldata_max_fee,
   COALESCE(AVG(tx.max_fee_per_blob_gas)::FLOAT, 0) AS avg_max_blob_gas_fee,
   COALESCE(AVG(b.blob_gas_price)::FLOAT, 0) AS avg_blob_gas_price,
-  NOW() AS updated_at
+  NOW() AS updated_at,
+
+  MIN(b.blob_gas_price) AS min_blob_gas_price,
+  MAX(b.blob_gas_price) AS max_blob_gas_price,
+
+  percentile_cont(0.25) WITHIN GROUP (ORDER BY b.blob_gas_price) AS q1_blob_gas_price,
+  percentile_cont(0.5)  WITHIN GROUP (ORDER BY b.blob_gas_price) AS median_blob_gas_price,
+  percentile_cont(0.75) WITHIN GROUP (ORDER BY b.blob_gas_price) AS q3_blob_gas_price
+
 FROM transaction tx
   JOIN block b ON b.hash = tx.block_hash
   JOIN address from_addr ON from_addr.address = tx.from_id
