@@ -6,7 +6,7 @@
   "types": "./index.ts",
   "license": "MIT",
   "scripts": {
-    "test": "pnpm vitest -u --reporter=verbose"
+    "test": "pnpm vitest --reporter=verbose"
   },
   "eslintConfig": {
     "root": true,
