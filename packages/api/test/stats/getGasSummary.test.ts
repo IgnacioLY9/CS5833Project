@@ -30,7 +30,7 @@ describe("getOverall", () => {
       [
         {
           "dimension": {
-            "name": "global",
+            "type": "global",
           },
           "metrics": {
             "maxBlobGasPrice": 22,
