@@ -23,7 +23,7 @@ describe("getOverall", () => {
 
   it("should return the correct overall stats", async () => {
     const overallStats = await caller
-      .getOverall()
+      .getGasSummary()
       .then((res) => res.data.map((s) => omitDBTimestampFields(s)));
 
     expect(overallStats).toMatchInlineSnapshot(`
