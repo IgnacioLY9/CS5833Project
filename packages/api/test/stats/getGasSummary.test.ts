@@ -30,72 +30,7 @@ describe("getOverall", () => {
       [
         {
           "dimension": {
-            "name": "other",
-            "type": "category",
-          },
-          "metrics": {
-            "maxBlobGasPrice": 22,
-            "medianBlobGasPrice": 22,
-            "minBlobGasPrice": 22,
-            "q1BlobGasPrice": 22,
-            "q3BlobGasPrice": 22,
-          },
-        },
-        {
-          "dimension": {
-            "name": "rollup",
-            "type": "category",
-          },
-          "metrics": {
-            "maxBlobGasPrice": 22,
-            "medianBlobGasPrice": 22,
-            "minBlobGasPrice": 22,
-            "q1BlobGasPrice": 22,
-            "q3BlobGasPrice": 22,
-          },
-        },
-        {
-          "dimension": {
-            "name": "arbitrum",
-            "type": "rollup",
-          },
-          "metrics": {
-            "maxBlobGasPrice": 22,
-            "medianBlobGasPrice": 22,
-            "minBlobGasPrice": 22,
-            "q1BlobGasPrice": 22,
-            "q3BlobGasPrice": 22,
-          },
-        },
-        {
-          "dimension": {
-            "name": "base",
-            "type": "rollup",
-          },
-          "metrics": {
-            "maxBlobGasPrice": 22,
-            "medianBlobGasPrice": 22,
-            "minBlobGasPrice": 22,
-            "q1BlobGasPrice": 22,
-            "q3BlobGasPrice": 22,
-          },
-        },
-        {
-          "dimension": {
-            "name": "optimism",
-            "type": "rollup",
-          },
-          "metrics": {
-            "maxBlobGasPrice": 22,
-            "medianBlobGasPrice": 22,
-            "minBlobGasPrice": 20,
-            "q1BlobGasPrice": 21.5,
-            "q3BlobGasPrice": 22,
-          },
-        },
-        {
-          "dimension": {
-            "type": "global",
+            "name": "global",
           },
           "metrics": {
             "maxBlobGasPrice": 22,

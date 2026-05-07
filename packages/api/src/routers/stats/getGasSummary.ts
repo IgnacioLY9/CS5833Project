@@ -23,28 +23,31 @@ const outputSchema = z
       })
       .array(),
   })
-  .transform(normalize);
+   .transform(normalize);
 
 export const getGasSummary = publicProcedure
   .meta({
     openapi: {
       method: "GET",
-      path: buildStatsPath("overall"),
+      path: buildStatsPath("gassummary"),
       tags: ["stats"],
-      summary: "retrieves all overall stats.",
+      summary: "retrieves statistics of gas prices.",
     },
   })
   .input(z.void())
   .output(outputSchema)
   .query(async ({ ctx: { prisma } }) => {
     const allOverallStats = await prisma.gasStats.findMany({
-      orderBy: [{ category: "asc" }, { rollup: "asc" }],
+      orderBy: { updatedAt: "desc" },
     });
 
     return {
       data: allOverallStats.map(
-        ({ category, rollup, updatedAt, ...metrics }) => ({
-          dimension: getDimension(category, rollup),
+        ({
+          updatedAt,
+          ...metrics
+        }) => ({
+          dimension: getDimension(null), // maybe?
           metrics,
           updatedAt,
         })
