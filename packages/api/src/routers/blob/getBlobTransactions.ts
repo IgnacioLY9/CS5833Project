@@ -12,7 +12,6 @@ import type { CompletedPrismaBlob } from "./helpers";
 import {
   responseBlobSchema,
   createBlobSelect,
-  toResponseBlob,
 } from "./helpers";
 
 const inputSchema = z
@@ -47,7 +46,7 @@ export const getBlobTransactions = publicProcedure
     const { id } = input;
     const isExpandEnabled = !!expands.block || !!expands.transaction;
 
-    const [prismaBlob, ethUsdPrices] = await Promise.all([
+    const [prismaBlob, _] = await Promise.all([
       prisma.blob.findFirst({
         select: createBlobSelect(expands),
         where: {
