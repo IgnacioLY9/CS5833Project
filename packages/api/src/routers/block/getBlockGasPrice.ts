@@ -13,7 +13,7 @@ import {
 } from "../../middlewares/withFilters";
 import { publicProcedure } from "../../procedures";
 import { normalize } from "../../utils";
-import { fetchBlock, toResponseBlock, blobGasPriceSchema } from "./helpers";
+import { fetchBlock, blobGasPriceSchema } from "./helpers";
 
 const inputSchema = z
   .object({
@@ -28,7 +28,7 @@ export const getBlockGasPrice = publicProcedure
   .meta({
     openapi: {
       method: "GET",
-      path: `/blocks/{gasPrice}`,
+      path: `/blocks/gasPrice/{id}`,
       tags: ["blocks"],
       summary: "retrieves blob gas price of a block for given block number or hash.",
       description: "This endpoint retrieves the blob gas price of a block. If that block does not contain any blobs, an error will be returned."
