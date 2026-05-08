@@ -1,68 +1,75 @@
-# Blobscan <a href="#"><img align="right" src=".github/assets/logo.svg" height="80px" /></a>
+# Ignacio Yockers CS 5833 Project <a href="#"><img align="right" src=".github/assets/logo.svg" height="80px" /></a>
 
-[![codecov](https://codecov.io/gh/Blobscan/blobscan/graph/badge.svg?token=KIPV5TH011)](https://codecov.io/gh/Blobscan/blobscan)
+This codebase updates the open-source project Blobscan. Blobscan is a block explorer that focuses on Ethereum blobs.
 
-Blobscan is the first blockchain explorer that helps to navigate and visualize shard blob transactions ([EIP-4844](https://www.eip4844.com)), providing the necessary infrastructure to scale Ethereum.
+The Blobscan website can be found [here](https://blobscan.com/). The original Blobscan github repository can be found [here](https://github.com/Blobscan/blobscan).
 
-To learn more about Blobscan, please check out our [documentation website](https://docs.blobscan.com).
+# Objective of this repository
 
-# Features
+This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains and Cryptocurrencies class. 
 
-- **Blob explorer** - Delve into blobs and examine their content.
-- **Search capabilities** - Look up blobs by their versioned hash, kzg commitment, transaction hash, slot or block number, along with associated transactions and blocks.
-- **Blob persistence** - For consistent availability even after pruning from the chain, blobscan support storing blobs in multiple storage systems, both centralized and decentralized.
-- **Blob decoding** - Seamlessly access detailed insights into blobs encoded in specialized formats, including rollup blobs or blobscriptions.
-- **Rich analytics dashboard** - Gain insights into blobs, blocks and transactions. View diverse charts and metrics.
-- **Blob API** - Blobscan's API facilitates queries on blobs, their associated blocks and transactions, along with relevant statistics and metrics.
-- **Open source** - Blobscan is open-source and available to everyone. We welcome contributions too. Check out our issues to see how you can help.
-- **Docker images** - available at [blobscan-web](https://hub.docker.com/r/blossomlabs/blobscan-web) and [blobscan-api](https://hub.docker.com/r/blossomlabs/blobscan-api).
+# Video showcase of this project
 
-# Ignacio Features
+[TODO make the video and update this link](https://www.youtube.com/@ignacioyockers4745)
+
+# Features/Improvements added by this project
 
 - **New API Endpoint** - Returns a 5 number summary of blob gas prices
 
+- **TODO New API Endpoint** - Query blob gas price for custom time interval.
+
+- **TODO New API Endpoint** - Query information about transactions contained in a blob.
+
+- **TODO New API Endpoint** - Query blob gas price for a specific blob.
+
+- **New Tests** - Tests matching the original tests were added for the new API endpoints added in this project.
+
+- **Updated Official Installation Guid** - When I originally tried following the [installation guide](https://docs.blobscan.com/docs/installation), I experiend a lot of trouble. Using docker was not good for development of this repository. Additionally, the guide for running the project locally is confusing, spread across multiple pages on the documentation page, and did not work.
+
+- **Updated API documentation** - The original API documentation does not contain a lot of detail. I improved the descriptions of the API endpoints I am familiar with.
+
+
 # Installation
 
-Check out [Installation guide](https://docs.blobscan.com/docs/installation).
+Requirements:
 
-# Sponsors
+Node.js 20
 
-We extend our gratitude to each one of them. Thank you 🙏
+pnpm
 
-<p>
-  <a href="https://ethereum.foundation">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://esp.ethereum.foundation/_next/static/media/esp-logo.96fc01cc.svg"/>
-      <img alt="paradigm logo" src="https://esp.ethereum.foundation/_next/static/media/esp-logo.96fc01cc.svg" width="auto" height="50"/>
-    </picture>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.optimism.io">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/ethereum-optimism/brand-kit/main/assets/svg/Profile-Logo.svg"/>
-      <img alt="optimism" src="https://raw.githubusercontent.com/ethereum-optimism/brand-kit/main/assets/svg/Profile-Logo.svg" width="auto" height="50"/>
-    </picture>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://scroll.io">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://scroll.io/_next/static/media/Scroll_Logomark.ad5d0348.svg"/>
-      <img alt="context logo" src="https://scroll.io/_next/static/media/Scroll_Logomark.ad5d0348.svg" width="auto" height="50"/>
-    </picture>
-  </a>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <a href="https://www.ethswarm.org">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://docs.ethswarm.org/img/logo.svg"/>
-      <img alt="context logo" src="https://docs.ethswarm.org/img/logo.svg" width="auto" height="50"/>
-    </picture>
-  </a>
-</p>
+docker compose
 
-# Donate
+Clone the repo:
 
-If you'd like to support the development of Blobscan, consider donating through our [Giveth project page](https://giveth.io/project/blobscan).
+```bash
+git clone https://github.com/IgnacioLY9/CS5833Project.git
+cd blobscan
+```
 
-#
+Install dependencies:
 
-[Join us on Discord!](https://discordapp.com/invite/fmqrqhkjHY/)
+```bash
+pnpm fetch -r
+pnpm install -r
+NODE_OPTIONS="--max-old-space-size=4096" NODE_ENV=production SKIP_ENV_VALIDATION=true npm run build
+```
+Launch Docker for postgres and redis:
+
+```bash
+docker compose -f docker-compose.local.yml up -d postgres redis
+```
+
+Run:
+
+```bash
+pnpm dev
+```
+
+Update the database:
+
+```bash
+cd packages/db
+pnpm db:migrate
+```
+
+For the purposes of this project, the most important thing is the API page which can be found at localhost port 3001.
