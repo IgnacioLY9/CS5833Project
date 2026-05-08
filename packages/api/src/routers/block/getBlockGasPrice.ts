@@ -52,5 +52,7 @@ export const getBlockGasPrice = publicProcedure
       });
     }
 
-    return toResponseBlock(res.block, res.ethUsdPrice?.price);
+    return {
+        blobGasPrice: res.block.blobGasPrice,
+    };
   });
