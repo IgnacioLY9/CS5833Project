@@ -21,7 +21,7 @@
     "lint:fix": "turbo lint:fix && manypkg fix",
     "start": "turbo start",
     "test": "pnpm with-env:test vitest",
-    "coverage": "pnpm with-env:test vitest -u --coverage",
+    "coverage": "pnpm with-env:test vitest --coverage",
     "test:ui": "pnpm with-env:test vitest --ui",
     "test:setup": "turbo test:setup",
     "test:dev": "pnpm test:setup && pnpm test",
