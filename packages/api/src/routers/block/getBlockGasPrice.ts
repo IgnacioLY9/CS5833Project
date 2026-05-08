@@ -13,7 +13,7 @@ import {
 } from "../../middlewares/withFilters";
 import { publicProcedure } from "../../procedures";
 import { normalize } from "../../utils";
-import { fetchBlock, toResponseBlock, responseBlockSchema } from "./helpers";
+import { fetchBlock, toResponseBlock, blobGasPriceSchema } from "./helpers";
 
 const inputSchema = z
   .object({
@@ -22,16 +22,16 @@ const inputSchema = z
   .merge(withTypeFilterSchema)
   .merge(createExpandsSchema(["transaction", "blob"]));
 
-const outputSchema = responseBlockSchema.transform(normalize);
+const outputSchema = blobGasPriceSchema.transform(normalize);
 
-export const getByBlockId = publicProcedure
+export const getBlockGasPrice = publicProcedure
   .meta({
     openapi: {
       method: "GET",
-      path: `/blocks/{id}`,
+      path: `/blocks/{gasPrice}`,
       tags: ["blocks"],
-      summary: "retrieves block details for given block number or hash.",
-      description: "This endpoint retrieves block details for given block number or hash. However, blocks are only stored if they contain blobs. If a valid block id is entered, but that blob does not contain any blobs, then the endpoint will return an error."
+      summary: "retrieves blob gas price of a block for given block number or hash.",
+      description: "This endpoint retrieves the blob gas price of a block. If that block does not contain any blobs, an error will be returned."
     },
   })
   .input(inputSchema)

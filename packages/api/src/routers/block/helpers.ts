@@ -28,6 +28,8 @@ import {
 import { extendedBlobDataStorageReferenceArgs } from "../blob/helpers";
 import type { ExtendedBlobDataStorageReference } from "../blob/helpers";
 
+import * as imports from "../../../../db/prisma/zod-utils"
+
 const prismaBlockSelect = {
   hash: true,
   number: true,
@@ -119,6 +121,10 @@ export const responseBlockSchema = baseBlockSchema.extend({
         ),
       })
   ),
+});
+
+export const blobGasPriceSchema = z.object({
+  blobGasPrice: imports.nonNegativeDecimalSchema,
 });
 
 export type ResponseBlock = z.input<typeof responseBlockSchema>;

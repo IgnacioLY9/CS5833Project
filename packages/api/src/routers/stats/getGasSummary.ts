@@ -32,6 +32,7 @@ export const getGasSummary = publicProcedure
       path: buildStatsPath("gassummary"),
       tags: ["stats"],
       summary: "retrieves statistics of gas prices.",
+      description: "This endpoint retrieves a global 5 number summary for blob gas prices. Specifically, it returns the minimum, maximum, median, first quartile, and third quartile blob gas price values"
     },
   })
   .input(z.void())

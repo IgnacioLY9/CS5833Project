@@ -32,6 +32,7 @@ export const getOverall = publicProcedure
       path: buildStatsPath("overall"),
       tags: ["stats"],
       summary: "retrieves all overall stats.",
+      description: "retrieves overall stats stored in the blobscan database grouped by rollup type and category. It also returns a section with type global which include the combined total of all of the stats."
     },
   })
   .input(z.void())
