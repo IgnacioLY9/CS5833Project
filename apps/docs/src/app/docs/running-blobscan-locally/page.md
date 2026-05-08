@@ -8,7 +8,7 @@ nextjs:
 
 ## Requirements
 
-- [Node.js 18+](https://nodejs.org/)
+- [Node.js 20](https://nodejs.org/)
 - [pnpm](https://pnpm.io/)
 - [docker compose](https://docs.docker.com/compose/)
 
@@ -34,7 +34,13 @@ Install all the Node.js dependencies:
 ```shell
 pnpm fetch -r
 pnpm install -r
-SKIP_ENV_VALIDATION=true npm run build
+NODE_ENV=production SKIP_ENV_VALIDATION=true npm run build
+```
+
+If you encounter issues regarding a lack of space on the build stack, you may need to run a command like this instead:
+
+```bash
+NODE_OPTIONS="--max-old-space-size=4096" NODE_ENV=production SKIP_ENV_VALIDATION=true npm run build
 ```
 
 ## Setup environment variables

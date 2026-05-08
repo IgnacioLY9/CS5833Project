@@ -24,7 +24,7 @@ This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains 
 
 - **New Tests** - Tests matching the original tests were added for the new API endpoints added in this project.
 
-- **Updated Official Installation Guid** - When I originally tried following the [installation guide](https://docs.blobscan.com/docs/installation), I experiend a lot of trouble. Using docker was not good for development of this repository. Additionally, the guide for running the project locally is confusing, spread across multiple pages on the documentation page, and did not work.
+- **Updated Official Installation Guide** - When I originally tried following the [installation guide](https://docs.blobscan.com/docs/installation), I experiend a lot of trouble. Using docker was not good for development of this repository. Additionally, the guide for running the project locally is confusing, spread across multiple pages on the documentation page, and did not work.
 
 - **Updated API documentation** - The original API documentation does not contain a lot of detail. I improved the descriptions of the API endpoints I am familiar with.
 
@@ -51,8 +51,15 @@ Install dependencies:
 ```bash
 pnpm fetch -r
 pnpm install -r
+NODE_ENV=production SKIP_ENV_VALIDATION=true npm run build
+```
+
+If this does not work due to a lack of space on the stack, you may need to run a command like this:
+
+```bash
 NODE_OPTIONS="--max-old-space-size=4096" NODE_ENV=production SKIP_ENV_VALIDATION=true npm run build
 ```
+
 Launch Docker for postgres and redis:
 
 ```bash
