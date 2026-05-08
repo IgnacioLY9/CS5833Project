@@ -3,12 +3,12 @@ import type { inferProcedureInput } from "@trpc/server";
 import { beforeAll, describe, expect, it } from "vitest";
 
 import type { TRPCContext } from "../../src";
-import type { getByBlockId } from "../../src/routers/block/getByBlockId";
+import type { getBlockGasPrice } from "../../src/routers/block/getBlockGasPrice";
 import { createTestContext, runExpandsTestsSuite } from "../helpers";
 import type { BlockCaller } from "./caller";
 import { createBlockCaller } from "./caller";
 
-describe("getByBlockId", () => {
+describe("getBlockGasPrice", () => {
   let blockCaller: BlockCaller;
   let ctx: TRPCContext;
 
@@ -18,7 +18,7 @@ describe("getByBlockId", () => {
   });
 
   it("should get a block by hash", async () => {
-    const result = await blockCaller.getByBlockId({
+    const result = await blockCaller.getBlockGasPrice({
       id: "0x00903f147f44929cdb385b595b2e745566fe50658362b4e3821fa52b5ebe8f06",
     });
 
@@ -26,18 +26,18 @@ describe("getByBlockId", () => {
   });
 
   it("should get a block by block number", async () => {
-    type Input = inferProcedureInput<typeof getByBlockId>;
+    type Input = inferProcedureInput<typeof getBlockGasPrice>;
     const input: Input = {
       id: "1002",
     };
 
-    const result = await blockCaller.getByBlockId(input);
+    const result = await blockCaller.getBlockGasPrice(input);
 
     expect(result).toMatchSnapshot();
   });
 
   it("should get latest block", async () => {
-    const result = await blockCaller.getByBlockId({
+    const result = await blockCaller.getBlockGasPrice({
       id: "latest",
     });
 
@@ -45,7 +45,7 @@ describe("getByBlockId", () => {
   });
 
   it("should get oldest block", async () => {
-    const result = await blockCaller.getByBlockId({
+    const result = await blockCaller.getBlockGasPrice({
       id: "oldest",
     });
 
@@ -53,7 +53,7 @@ describe("getByBlockId", () => {
   });
 
   it("should get a reorged block by block number", async () => {
-    const result = await blockCaller.getByBlockId({
+    const result = await blockCaller.getBlockGasPrice({
       id: "1008",
       type: "reorged",
     });
@@ -62,7 +62,7 @@ describe("getByBlockId", () => {
   });
 
   it("should get the canonical block when providing a block number matching a reorged block", async () => {
-    const result = await blockCaller.getByBlockId({
+    const result = await blockCaller.getBlockGasPrice({
       id: "1008",
     });
 
@@ -70,12 +70,12 @@ describe("getByBlockId", () => {
   });
 
   runExpandsTestsSuite("block", ["transaction", "blob"], (expandInput) =>
-    blockCaller.getByBlockId({ id: "1002", ...expandInput })
+    blockCaller.getBlockGasPrice({ id: "1002", ...expandInput })
   );
 
   it("should fail when trying to get a block with an invalid hash", async () => {
     await expect(
-      blockCaller.getByBlockId({
+      blockCaller.getBlockGasPrice({
         id: "invalidHash",
       })
     ).rejects.toThrow();
@@ -85,7 +85,7 @@ describe("getByBlockId", () => {
     const invalidHash =
       "0x0132d67fc77e26737632ebda918c689f146196dcd0dc5eab95ab7875cef95ef9";
     await expect(
-      blockCaller.getByBlockId({
+      blockCaller.getBlockGasPrice({
         id: invalidHash,
       })
     ).rejects.toThrow(
@@ -98,7 +98,7 @@ describe("getByBlockId", () => {
 
   it("should fail when trying to get a block with a non-existent block number", async () => {
     await expect(
-      blockCaller.getByBlockId({
+      blockCaller.getBlockGasPrice({
         id: "9999",
       })
     ).rejects.toThrow(
