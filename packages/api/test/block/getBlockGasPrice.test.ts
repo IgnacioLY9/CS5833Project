@@ -91,7 +91,7 @@ describe("getByBlockId", () => {
     ).rejects.toThrow(
       new TRPCError({
         code: "NOT_FOUND",
-        message: `Block with id "${invalidHash}" not found`,
+        message: `Block with id "${invalidHash}" not found. It is possible this block exists, but it does not contain any blobs`,
       })
     );
   });
@@ -104,7 +104,7 @@ describe("getByBlockId", () => {
     ).rejects.toThrow(
       new TRPCError({
         code: "NOT_FOUND",
-        message: 'Block with id "9999" not found',
+        message: 'Block with id "9999" not found. It is possible this block exists, but it does not contain any blobs',
       })
     );
   });

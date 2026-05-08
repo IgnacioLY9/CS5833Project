@@ -1,0 +1,55 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`getByBlockId > should get a block by block number 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > should get a block by hash 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > should get a reorged block by block number 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > should get latest block 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > should get oldest block 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > should get the canonical block when providing a block number matching a reorged block 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > when getting expanded block results > should return the correct expanded blob 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > when getting expanded block results > should return the correct expanded results when multiple expands are requested 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
+
+exports[`getByBlockId > when getting expanded block results > should return the correct expanded transaction 1`] = `
+{
+  "blobGasPrice": 22n,
+}
+`;
