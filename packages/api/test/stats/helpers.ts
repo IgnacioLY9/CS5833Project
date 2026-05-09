@@ -19,6 +19,8 @@ export function runTimeFrameTests({
       it(`should get daily stats for ${timeFrame}`, async () => {
         const result = await statsFetcher(timeFrame);
 
+        console.dir(result, { depth: null });
+
         expect(result).toMatchSnapshot();
       });
     });
