@@ -73,6 +73,35 @@ export const timeseriesMetricsSchema = DailyStatsModel.omit({
   rollup: true,
 });
 
+export const timeseriesMetricsSchemaGas = DailyStatsModel.omit({
+  id: true,
+  day: true,
+  category: true,
+  rollup: true,
+  avgBlobAsCalldataFee: true,
+  avgBlobAsCalldataMaxFee: true,
+  avgBlobFee: true,
+  avgBlobMaxFee: true,
+  avgMaxBlobGasFee: true,
+  totalBlobAsCalldataFee: true,
+  totalBlobAsCalldataGasUsed: true,
+  totalBlobAsCalldataMaxFees: true,
+  totalBlobGasPrice: true,
+  totalBlobFee: true,
+  totalBlobGasUsed: true,
+  totalBlobMaxFees: true,
+  totalBlobMaxGasFees: true,
+  totalBlobs: true,
+  totalBlobSize: true,
+  totalBlocks: true,
+  totalTransactions: true,
+  totalUniqueBlobs: true,
+  totalUniqueReceivers: true,
+  totalUniqueSenders: true,
+  avgBlobUsageSize: true,
+  totalBlobUsageSize: true,
+});
+
 export const toLogLevelSchema = z.string().transform((value, ctx) => {
   const result = logLevelEnum.safeParse(value);
   if (!result.success) {
