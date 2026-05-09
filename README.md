@@ -16,7 +16,7 @@ This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains 
 
 - **New API Endpoint** - Returns a 5 number summary of blob gas prices
 
-- **TODO New API Endpoint** - Query blob gas price for custom time interval.
+- **New API Endpoint** - Query blob gas price for custom time interval.
 
 - **New API Endpoint** - Query information about transactions contained in a blob.
 
