@@ -11,7 +11,7 @@ import type { StatsCaller } from "./caller";
 import { createStatsCaller } from "./caller";
 import { runTimeFrameTests } from "./helpers";
 
-describe("getGasStats", () => {
+describe("getGasTime", () => {
   let caller: StatsCaller;
   let ctx: TRPCContext;
   const input: Parameters<typeof caller.getGasTime>[0] = {
