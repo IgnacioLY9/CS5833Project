@@ -15,16 +15,16 @@ import {
   arrayOptionalizeShape,
   dimensionSchema,
   getDimension,
-  timeseriesMetricsSchemaGas,
+  timeseriesMetricsSchema,
 } from "../../zod-schemas";
 import { buildStatsPath } from "./helpers";
 
-const METRIC_NAMES = Object.keys(timeseriesMetricsSchemaGas.shape);
+// const METRIC_NAMES = Object.keys(timeseriesMetricsSchema.shape);
 
 const inputSchema = withStatFiltersSchema.merge(withSortFilterSchema);
 
 const metricSeriesSchema = z.object(
-  arrayOptionalizeShape(timeseriesMetricsSchemaGas.shape)
+  arrayOptionalizeShape(timeseriesMetricsSchema.shape)
 );
 
 const timeseriesSchema = z.object({
@@ -63,7 +63,6 @@ function createTimeseries(
 function createOutput({
   categories,
   rollups,
-  metrics: stats,
 }: z.output<typeof inputSchema>): OutputSchema {
   const output: OutputSchema = {
     data: {
@@ -75,7 +74,7 @@ function createOutput({
   const requestedCategories =
     categories === "all" ? Object.values(Category) : categories;
   const requestedRollups = rollups === "all" ? Object.values(Rollup) : rollups;
-  const requestedMetrics = stats ?? METRIC_NAMES;
+  const requestedMetrics = ["avgBlobGasPrice"];
 
   if (requestedCategories) {
     output.data.series.push(
@@ -140,9 +139,9 @@ export const getGasTime = publicProcedure
   .meta({
     openapi: {
       method: "GET",
-      path: buildStatsPath("GasTime"),
+      path: buildStatsPath("gastime"),
       tags: ["stats"],
-      summary: "retrieves the average blob gas price for a time range.",
+      summary: "retrieves average blob gas price for certain time ranges.",
     },
   })
   .input(inputSchema)
@@ -207,6 +206,9 @@ export const getGasTime = publicProcedure
           }
 
           for (const [metricName, metricValue] of Object.entries(stats)) {
+            if (metricName !== "avgBlobGasPrice") {
+                continue;
+            }
             const skippableFields = ["day", "category", "rollup", "id"];
             const allowedMetricTypes = ["number", "bigint"];
 
