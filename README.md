@@ -29,7 +29,7 @@ This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains 
 - **Updated API documentation** - The original API documentation does not contain a lot of detail. I improved the descriptions of the API endpoints I am familiar with.
 
 
-# Installation
+# Installation/Build
 
 Requirements:
 
@@ -60,6 +60,8 @@ If this does not work due to a lack of space on the stack, you may need to run a
 NODE_OPTIONS="--max-old-space-size=4096" NODE_ENV=production SKIP_ENV_VALIDATION=true npm run build
 ```
 
+# Run
+
 Launch Docker for postgres and redis:
 
 ```bash
@@ -80,3 +82,7 @@ pnpm db:migrate
 ```
 
 For the purposes of this project, the most important thing is the API page which can be found at localhost port 3001.
+
+# Test
+
+Testing is done automatically by GitHub Actions everytime the main branch of this repository is updated.
