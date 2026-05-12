@@ -105,6 +105,7 @@ Inside psql run
 
 ```bash
 CREATE DATABASE blobscan_dev OWNER blobscan;
+ALTER USER blobscan WITH PASSWORD 's3cr3t';
 GRANT CREATE ON SCHEMA public TO blobscan;
 \q
 ```
