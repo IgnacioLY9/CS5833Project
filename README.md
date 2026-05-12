@@ -41,6 +41,8 @@ Node.js 20
 
 pnpm
 
+psql
+
 docker compose
 
 Clone the repo:
