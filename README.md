@@ -28,6 +28,10 @@ This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains 
 
 - **Updated API documentation** - The original API documentation does not contain a lot of detail. I improved the descriptions of the API endpoints I am familiar with.
 
+Code for the added API endpoints can be found in ...
+
+Code for the added tests can be found in ...
+
 
 # Installation/Build
 
@@ -45,6 +49,20 @@ Clone the repo:
 git clone https://github.com/IgnacioLY9/CS5833Project.git
 cd blobscan
 ```
+
+Set env file:
+
+```bash
+cp .env.example .env
+```
+
+For the purposes of this guide, you need to update:
+
+SECRET_KEY, BEACON_NODE_ENDPOINT, EXECUTION_NODE_ENDPOINT
+
+DATABASE_URL=postgresql://blobscan:s3cr3t@localhost:5432/blobscan_dev?schema=public
+
+DIRECT_URL=postgresql://blobscan:s3cr3t@localhost:5432/blobscan_dev?schema=public
 
 Install dependencies:
 
@@ -76,9 +94,26 @@ pnpm dev
 
 Update the database:
 
+Move to a separate terminal and run
+```bash
+sudo -u postgres psql
+```
+
+Inside psql run
+
+```bash
+CREATE DATABASE blobscan_dev OWNER blobscan;
+GRANT CREATE ON SCHEMA public TO blobscan;
+\q
+```
+
+Back in the normal terminal, we need to initialize the database:
+
+
 ```bash
 cd packages/db
 pnpm db:migrate
+pnpm db:seed
 ```
 
 For the purposes of this project, the most important thing is the API page which can be found at localhost port 3001.
