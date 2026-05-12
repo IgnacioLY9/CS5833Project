@@ -10,7 +10,7 @@ This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains 
 
 # Video showcase of this project
 
-[TODO make the video and update this link](https://www.youtube.com/@ignacioyockers4745)
+[Demonstration video](https://youtu.be/9WzsHFktUIU)
 
 # Features/Improvements added by this project
 
@@ -28,9 +28,9 @@ This repositry is for the final project of OU's Spring 2026 CS 5833 Blockchains 
 
 - **Updated API documentation** - The original API documentation does not contain a lot of detail. I improved the descriptions of the API endpoints I am familiar with.
 
-Code for the added API endpoints can be found in ...
+Code for the added API endpoints can be found in `/packages/api/src/routers`.
 
-Code for the added tests can be found in ...
+Code for the added tests can be found in `/packages/api/test`.
 
 
 # Installation/Build
